@@ -58,6 +58,8 @@ def main(args):
     # Assuming output colors are in RGB color space!!!
     dominant_colors_fixed = [[int(c * 2**channel_depth) for c in color] for color in dominant_colors]
     output_colors_hex_rgb = [rgb_to_hex_color(*c) for c in dominant_colors_fixed]
+    # Limit decimal places
+    dominant_colors = list(map(lambda p: [round(c, args.significant_digits) for c in p], dominant_colors))
     print(json.dumps({
         'colors': dominant_colors,
         'format': output_space
@@ -70,11 +72,12 @@ if __name__ == "__main__":
     parser = ArgumentParser(description='Extract colors from an image')
     parser.add_argument('image')
     parser.add_argument('--number-of-colors', nargs='?', type=int, default=5)
-    parser.add_argument('--max-sample-dimension', nargs='?', type=int, default=16)
+    parser.add_argument('--max-sample-dimension', nargs='?', type=int, default=64)
     # Analysis color space
-    parser.add_argument('--analysis-color-space', nargs='?', default='rgb')
+    parser.add_argument('--analysis-color-space', nargs='?', default='yiq')
     # Output color space (RGB by default)
     parser.add_argument('--output-color-space', nargs='?', default='rgb')
+    parser.add_argument('--significant-digits', nargs='?', type=int, default=16)
     parser.add_argument('--display', action='store_true', default=False)
     parser.add_argument('--test', action='store_true', default=False)
     args = parser.parse_args()
