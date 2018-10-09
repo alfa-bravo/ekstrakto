@@ -9,10 +9,6 @@ Find the dominant colors in an image.
 import json
 from argparse import *
 from PIL import Image
-from functools import reduce
-from scipy.cluster.hierarchy import *
-from scipy.cluster.vq import *
-import colorsys
 
 import sys
 sys.path.append('../ekstrakto')
@@ -56,7 +52,7 @@ def main(args):
     output_cs_func = get_colorsys(analysis_space, output_space)
     # Convert RGB to analysis color space
     pixels = list(map(lambda _: analysis_cs_func(*_), pixels))
-    dominant_colors = calculate_dominant_colors(pixels, args.number_of_colors)
+    dominant_colors = calculate_dominant_colors3(pixels, args.number_of_colors)
     # Convert analysis color space to output color space
     dominant_colors = list(map(lambda _: output_cs_func(*_), dominant_colors))
     # Assuming output colors are in RGB color space!!!
@@ -80,5 +76,10 @@ if __name__ == "__main__":
     # Output color space (RGB by default)
     parser.add_argument('--output-color-space', nargs='?', default='rgb')
     parser.add_argument('--display', action='store_true', default=False)
+    parser.add_argument('--test', action='store_true', default=False)
     args = parser.parse_args()
-    main(args)
+    if args.test:
+        from ekstrakto.tests import run_tests
+        run_tests(args)
+    else:
+        main(args)
