@@ -4,7 +4,7 @@ setup(
     name='ekstrakto',
     version='0.1dev',
     packages=['ekstrakto'],
-    scripts=['bin/ek'],
+    console_scripts=['ek=ekstrakto.cli:entrypoint'],
     license='MIT',
     long_description=open('README.md').read(),
 )

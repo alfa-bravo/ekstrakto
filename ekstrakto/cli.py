@@ -67,8 +67,7 @@ def main(args):
     if args.display:
         show_display(output_colors_hex_rgb, image)
 
-
-if __name__ == "__main__":
+def entrypoint():
     parser = ArgumentParser(description='Extract colors from an image')
     parser.add_argument('image')
     parser.add_argument('--number-of-colors', nargs='?', type=int, default=5)
@@ -86,3 +85,6 @@ if __name__ == "__main__":
         run_tests(args)
     else:
         main(args)
+
+if __name__ == "__main__":
+    entrypoint()
