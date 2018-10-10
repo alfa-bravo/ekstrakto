@@ -2,16 +2,29 @@ ekstrakto
 =====
 extract dominant colors from images
 
+installation
+-----
+```sh
+pip install ekstrakto
+```
+
 usage
 -----
 
-_usage_
+_command line utility_
 ```sh
-py -3 bin/ek.py --help
+ek --help
+...
+ek <options> image
 ```
-_e.g. from an image file_
+_e.g. analyze an image file and display the colors_
 ```sh
-py -3 bin/ek.py <options> image
+ek.py --display image
+```
+_for developers_
+```sh
+cd path/to/ekstrakto
+py -3 ./bin/ek.py <options> image
 ```
 
 license
