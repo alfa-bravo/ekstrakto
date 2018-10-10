@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 ekstrakto 0002
 Author: Vincent Brubaker-Gianakos
@@ -11,7 +9,6 @@ from argparse import *
 from PIL import Image
 
 import sys
-sys.path.append('../ekstrakto')
 from ekstrakto.helpers import *
 
 def show_display(output_colors, image):
