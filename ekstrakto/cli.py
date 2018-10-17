@@ -30,7 +30,7 @@ def show_display(output_colors, image):
             y = 0
             canvas.create_rectangle(x, y, x + w, y + h, fill=color, outline='')
     else:
-        print('Warning: no output colors to display')
+        print('Warning: no output colors to display', file=sys.stderr)
     photo_image = ImageTk.PhotoImage(image)
     canvas.create_image(10, 10, image=photo_image, anchor='nw')
     tk.mainloop()
