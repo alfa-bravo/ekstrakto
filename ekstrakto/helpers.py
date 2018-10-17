@@ -10,6 +10,7 @@ from sklearn.cluster import KMeans
 import colorsys
 from ekstrakto.geometry import collapse_closest_points, line_point_distance
 
+RANDOM_STATE = 42
 
 def get_normalized_pixel_data(image, channel_depth):
     data = image.getdata()
@@ -78,7 +79,7 @@ def find_optimal_score_index(scores):
 
 def get_optimal_k_means(pixels, n0=1, nf=10):
     n_clusters_range = range(n0, nf)
-    k_means = [KMeans(n_clusters=n) for n in n_clusters_range]
+    k_means = [KMeans(n_clusters=n, random_state=RANDOM_STATE) for n in n_clusters_range]
     scores = [k_means[i].fit(pixels).score(pixels) for i in range(len(k_means))]
     optimal_score_index = find_optimal_score_index(scores)
     return (k_means, optimal_score_index)
@@ -97,7 +98,7 @@ def calculate_dominant_colors3(pixels, k, layers=3, layer_step_size=None, n0=1, 
             k_means = k_means_list[idx]
         else:
             n_clusters = n0 + idx
-            k_means = KMeans(n_clusters=n_clusters)
+            k_means = KMeans(n_clusters=n_clusters, random_state=RANDOM_STATE)
             k_means.fit(pixels)
         labels = k_means.predict(pixels)
         colors = _calculate_dominant_colors(pixels, labels, k_means.n_clusters)
