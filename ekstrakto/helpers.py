@@ -40,19 +40,6 @@ def _calculate_dominant_colors(pixels, labels, k):
         colors.append(e)
     return colors
 
-
-def calculate_dominant_colors(pixels, k):
-    z = centroid(pixels)
-    clusters = fcluster(z, k, criterion='maxclust')
-    clusters = [c - 1 for c in clusters] # Convert 1 index to 0
-    return _calculate_dominant_colors(pixels, clusters, k)
-
-
-def calculate_dominant_colors2(pixels, k):
-    codebook, distortion = kmeans(pixels, k)
-    return codebook
-
-
 def find_optimal_score_index(scores):
     '''
     Calculate line parameters
@@ -87,6 +74,15 @@ def get_optimal_k_means(pixels, n0=1, nf=10):
 
 def calculate_dominant_colors3(pixels, k, layers=3, layer_step_size=None, n0=1, nf=10):
     k_means_list, optimal_score_index = get_optimal_k_means(pixels, n0, nf)
+    if k == 'auto':
+        k = 5
+        number_of_colors = k_means_list[optimal_score_index].n_clusters
+    else:
+        try:
+            k = int(k)
+        except ValueError as e:
+            raise ValueError('Invalid value for argument "k"', k) from e
+        number_of_colors = k
     begin = optimal_score_index
     end = optimal_score_index + layers * k
     if layer_step_size is None:
@@ -103,7 +99,7 @@ def calculate_dominant_colors3(pixels, k, layers=3, layer_step_size=None, n0=1, 
         labels = k_means.predict(pixels)
         colors = _calculate_dominant_colors(pixels, labels, k_means.n_clusters)
         results.extend(colors)
-        results = collapse_closest_points(results, k)
+        results = collapse_closest_points(results, number_of_colors)
     return results
 
 

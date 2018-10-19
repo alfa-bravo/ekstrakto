@@ -49,7 +49,7 @@ def main(args):
     output_cs_func = get_colorsys(analysis_space, output_space)
     # Convert RGB to analysis color space
     pixels = list(map(lambda _: analysis_cs_func(*_), pixels))
-    dominant_colors = calculate_dominant_colors3(pixels, args.number_of_colors)
+    dominant_colors = calculate_dominant_colors3(pixels, args.number_of_colors.lower())
     # Convert analysis color space to output color space
     dominant_colors = list(map(lambda _: output_cs_func(*_), dominant_colors))
     # Assuming output colors are in RGB color space!!!
@@ -67,7 +67,7 @@ def main(args):
 def entrypoint():
     parser = ArgumentParser(description='Extract colors from an image')
     parser.add_argument('image')
-    parser.add_argument('--number-of-colors', nargs='?', type=int, default=5)
+    parser.add_argument('--number-of-colors', nargs='?', default='auto')
     parser.add_argument('--max-sample-dimension', nargs='?', type=int, default=64)
     # Analysis color space
     parser.add_argument('--analysis-color-space', nargs='?', default='yiq')
