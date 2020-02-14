@@ -1,7 +1,4 @@
-Pillow==5.3.0
-scipy==1.1.0
-scikit-learn==0.20.0
-
-# fixes an issue in scikit-learn
-# https://github.com/scikit-learn/scikit-learn/issues/12226
-cloudpickle==0.5.6
+pillow
+scipy
+scikit-learn
+kdtree
