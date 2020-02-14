@@ -1,5 +1,5 @@
 """
-ekstrakto 0002
+ekstrakto 0003
 Author: Vincent Brubaker-Gianakos
 Find the dominant colors in an image.
 """
@@ -50,11 +50,10 @@ def main(args):
         dominant_colors = top_colors[:number_of_colors]
     except ValueError:
         top_values = top_values / np.max(top_values)
-        dominant_colors = [c for c, v in zip(top_colors, top_values)
-                           if v > args.color_threshold]
-    # Assuming output colors are in RGB color space!!!
-    dominant_colors_fixed = [[int(c * 2**channel_bit_depth) for c in color]
-                             for color in dominant_colors]
+        dominant_colors = top_colors[top_values > args.color_threshold]
+
+    dominant_colors_fixed = np.array(
+        dominant_colors * (2**channel_bit_depth - 1), dtype='int')
     output_colors_hex_rgb = [rgb_to_hex_color(*c)
                              for c in dominant_colors_fixed]
     # Limit decimal places

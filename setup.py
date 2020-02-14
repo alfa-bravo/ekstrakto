@@ -5,9 +5,9 @@ setup(
     version='0.2dev',
     packages=['ekstrakto'],
     install_requires=[
-        'Pillow',
-        'scipy',
-        'scikit-learn',
+        'numpy',
+        'pillow',
+        'kdtree',
     ],
     entry_points = {
         'console_scripts': [
