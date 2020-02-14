@@ -15,7 +15,6 @@ def progressive_peak_find(h, distinctness=1.0):
     peaks = dict()
     peaks[array[0][0]] = array[0][1]
     visited = kdtree.create([array[0][0]])
-
     for idx, value in array[1:]:
         nearest_visited, d = visited.search_nn(idx)
         d = d / h.shape[0]
@@ -28,7 +27,7 @@ def progressive_peak_find(h, distinctness=1.0):
 
 
 def peak_find_3d(pixels, n_bins=19, distinctness=1.0):
-    bin_range = np.arange(-1, n_bins + 2) / n_bins
+    bin_range = np.linspace(0, 1, n_bins)
     bins = (bin_range,) * 3
     H, edges = np.histogramdd(pixels, bins)
     coords, values = progressive_peak_find(H, distinctness)
