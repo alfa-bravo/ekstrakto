@@ -8,7 +8,6 @@ setup(
         'numpy',
         'pillow',
         'kdtree',
-        'matplotlib',
     ],
     entry_points = {
         'console_scripts': [
